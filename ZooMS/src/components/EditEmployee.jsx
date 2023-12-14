@@ -7,6 +7,7 @@ const EditEmployee = () => {
     const [employee, setEmployee] = useState({
         name: "",
         email: "",
+        password: "",
         salary: "",
         address: "",
         category_id: "",
@@ -86,6 +87,19 @@ const EditEmployee = () => {
             />
           </div>
           <div className='col-12'>
+            <label for="inputPassword4" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control rounded-0"
+              id="inputPassword4"
+              placeholder="Enter Password"
+              value={employee.password}
+              onChange={(e) =>
+                setEmployee({ ...employee, password: e.target.value })
+              }
+            />
             <label for="inputSalary" className="form-label">
               Salary
             </label>

@@ -98,11 +98,12 @@ router.get('/employee/:id', (req, res) => {
 router.put('/edit_employee/:id', (req, res) => {
   const id = req.params.id;
   const sql = `UPDATE employee 
-    set name = ?, email = ?, salary = ?, address = ?, category_id = ? 
+    set name = ?, email = ?, password = ?, salary = ?, address = ?, category_id = ? 
     Where id = ?`
   const values = [
     req.body.name,
     req.body.email,
+    req.body.password,
     req.body.salary,
     req.body.address,
     req.body.category_id
