@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from "react-router-dom"
+import {Link, Outlet} from "react-router-dom"
 import "bootstrap-icons/font/bootstrap-icons.css"
 
 function DashBoard() {
@@ -21,19 +21,19 @@ function DashBoard() {
                 </Link>
               </li>
               <li className="w-100">
-                <Link to = "/dashboard" className="nav-link px-0 align-middle text-white"> 
+                <Link to = "/dashboard/employee" className="nav-link px-0 align-middle text-white"> 
                   <i className="fs-4 bi-people ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Manage Employee</span>
                 </Link>
               </li >
               <li className="w-100">
-                <Link to = "/dashboard" className="nav-link px-0 align-middle text-white"> 
+                <Link to = "/dashboard/category" className="nav-link px-0 align-middle text-white"> 
                   <i className="fs-4 bi bi-tags ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Category</span>
                 </Link>
               </li>
               <li className="w-100">
-                <Link to = "/dashboard" className="nav-link px-0 align-middle text-white"> 
+                <Link to = "/dashboard/profile" className="nav-link px-0 align-middle text-white"> 
                   <i className="fs-4 bi bi-person-square ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Profile</span>
                 </Link>
@@ -46,6 +46,12 @@ function DashBoard() {
               </li>
             </ul>
           </div>
+        </div>
+        <div className='col p-0 m-0'>
+          <div className='p-2 d-flex justify-content-center shadow'>
+            <h4> Employee Management System</h4>
+          </div>
+          <Outlet />
         </div>
       </div>
     </div>
