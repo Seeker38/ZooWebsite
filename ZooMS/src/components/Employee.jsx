@@ -5,20 +5,34 @@ import './Employee.css'
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
+  const [category, setCategory] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/auth/employee")
+    axios.get("http://localhost:3000/auth/employee")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
         } else {
           alert(result.data.Error);
         }
-      })
-      .catch((err) => console.log(err));
+      }).catch((err) => console.log(err));
+
+    axios.get('http://localhost:3000/auth/category')
+    .then(result => {
+        if(result.data.Status) {
+            setCategory(result.data.Result);
+        } else {
+            alert(result.data.Error)
+        }
+    }).catch(err => console.log(err))
   }, []);
+
+  const getCategoryName = (categoryId) => {
+    const selectedCategory = category.find(c => c.id === categoryId);
+    return selectedCategory ? selectedCategory.name : 'N/A';
+  }
+
   const handleDelete = (id) => {
     axios.delete('http://localhost:3000/auth/delete_employee/'+id)
     .then(result => {
@@ -45,6 +59,7 @@ const Employee = () => {
               <th>Image</th>
               <th>Email</th>
               <th>Address</th>
+              <th>cateogory</th>
               <th>Salary</th>
               <th>Action</th>
             </tr>
@@ -58,6 +73,7 @@ const Employee = () => {
                 </td>
                 <td>{e.email}</td>
                 <td>{e.address}</td>
+                <td>{getCategoryName(e.category_id)}</td>
                 <td>{e.salary}</td>
                 <td>
                   <Link to={`/dashboard/edit_employee/`+e.id} className="btn btn-primary btn-sm me-2">
