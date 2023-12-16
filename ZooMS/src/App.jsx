@@ -11,15 +11,25 @@ import Profile from './components/Profile'
 import AddCategory from './components/AddCategory'
 import AddEmployee from './components/AddEmployee'
 import EditEmployee from './components/EditEmployee'
+import Entrance from './components/Entrance'
+import EmployeeLogin from './components/EmployeeLogin'
+import EmployeeDashboard from './components/EmployeeDashboard'
+import PrivateRoute from './components/PrivateRoute'
+
 
 function App() {
-
   return (
-    // <><Login /></>
     <BrowserRouter>
-    <Routes> 
-      <Route path = "/adminlogin" element={<Login />}></Route>
-      <Route path='/dashboard' element={<Dashboard />}>
+    <Routes>
+      <Route path='/entrance' element={<Entrance />}></Route>
+      <Route path='/adminlogin' element={<Login />}></Route>
+      <Route path='/employee_login' element={<EmployeeLogin />}></Route>
+      <Route path='/employee_detail/:id' element={<EmployeeDashboard />}></Route>
+      <Route path='/dashboard' element={
+        <PrivateRoute >
+          <Dashboard />
+        </PrivateRoute>
+      }>
         <Route path='' element={<Home />}></Route>
         <Route path='/dashboard/employee' element={<Employee />}></Route>
         <Route path='/dashboard/category' element={<Category />}></Route>
@@ -29,8 +39,7 @@ function App() {
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
       </Route>
     </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
   )
 }
-
 export default App

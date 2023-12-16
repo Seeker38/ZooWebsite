@@ -54,27 +54,39 @@ const upload = multer({
 })
 // end imag eupload 
 
-router.post('/add_employee',upload.single('image'), (req, res) => {
+router.post('/add_employee', upload.single('image'), (req, res) => {
+  console.log('Request Body:', req.body);
+  console.log('Request File:', req.file);
+
   const sql = `INSERT INTO employee 
-  (name,email,password, address, salary,image, category_id) 
-  VALUES (?)`;
+    (name, email, password, address, salary, image, category_id) 
+    VALUES (?)`;
+
   bcrypt.hash(req.body.password, 10, (err, hash) => {
-    if(err) return res.json({Status: false, Error: "Query Error"})
+    if (err) {
+      console.error('Hashing Error:', err);
+      return res.json({ Status: false, Error: "Hashing Error" });
+    }
     const values = [
       req.body.name,
       req.body.email,
       hash,
       req.body.address,
-      req.body.salary, 
+      req.body.salary,
       req.file.filename,
       req.body.category_id
-    ]
+    ];
+
     con.query(sql, [values], (err, result) => {
-      if(err) return res.json({Status: false, Error: err})
-      return res.json({Status: true})
-    })
-  })
-})
+      if (err) {
+        console.error('Query Error:', err);
+        return res.json({ Status: false, Error: err });
+      }
+      return res.json({ Status: true });
+    });
+  });
+});
+
 
 
 
@@ -99,20 +111,26 @@ router.put('/edit_employee/:id', (req, res) => {
   const id = req.params.id;
   const sql = `UPDATE employee 
     set name = ?, email = ?, password = ?, salary = ?, address = ?, category_id = ? 
-    Where id = ?`
-  const values = [
-    req.body.name,
-    req.body.email,
-    req.body.password,
-    req.body.salary,
-    req.body.address,
-    req.body.category_id
-  ]
-  con.query(sql, [...values, id] , (err, result) => {
-    if(err) return res.json({Status: false, Error: "Query Error"})
-    return res.json({Status: true, Result: result})
-  })
-})
+    Where id = ?`;
+
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    if (err) return res.json({ Status: false, Error: "Hashing Error" });
+
+    const values = [
+      req.body.name,
+      req.body.email,
+      hash,
+      req.body.salary,
+      req.body.address,
+      req.body.category_id
+    ];
+
+    con.query(sql, [...values, id], (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query Error" });
+      return res.json({ Status: true, Result: result });
+    });
+  });
+});
 
 router.delete('/delete_employee/:id', (req, res) => {
   const id = req.params.id;
@@ -131,7 +149,7 @@ router.get("/admin_count", (req, res) => {
   })
 })
 
-router.get('/employee_count', (req, res) => {
+router.get("/employee_count", (req, res) => {
   const sql = "select count(id) as employee from employee";
   con.query(sql, (err, result) => {
       if(err) return res.json({Status: false, Error: "Query Error"})
@@ -139,7 +157,7 @@ router.get('/employee_count', (req, res) => {
   })
 })
 
-router.get('/salary_count', (req, res) => {
+router.get("/salary_count", (req, res) => {
   const sql = "select sum(salary) as TotalSalary from employee";
   con.query(sql, (err, result) => {
       if(err) return res.json({Status: false, Error: "Query Error"})
@@ -147,12 +165,17 @@ router.get('/salary_count', (req, res) => {
   })
 })
 
-router.get('/admin_records', (req, res) => {
+router.get("/admin_records", (req, res) => {
   const sql = "select * from admin"
   con.query(sql, (err, result) => {
       if(err) return res.json({Status: false, Error: "Query Error"})
       return res.json({Status: true, Result: result})
   })
+})
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('token')
+  return res.json({Status: true})
 })
 
 export {router as adminRouter};
