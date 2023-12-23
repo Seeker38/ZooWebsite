@@ -5,8 +5,9 @@ import bcrypt from 'bcrypt'
 
 const router = express.Router()
 
+
 router.post("/employee_login", (req, res) => {
-  const sql = "SELECT * from employee Where email = ?";
+  const sql = "SELECT * from employees Where email = ?";
   con.query(sql, [req.body.email], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });
     if (result.length > 0) {
@@ -28,13 +29,23 @@ router.post("/employee_login", (req, res) => {
 
 router.get('/dashboard/:id', (req, res) => {
   const id = req.params.id;
-  const sql = "SELECT * FROM employee where id = ?"
+  const sql = "SELECT * FROM employees where id = ?"
   con.query(sql, [id], (err, result) => {
     if(err) return res.json({Status: false});
     return res.json(result)
   })
 })
 
+
+// ASSIGN WORK
+router.get('/assign_work/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM assign_work where id = ?"
+  con.query(sql, [id], (err, result) => {
+    if(err) return res.json({Status: false});
+    return res.json(result)
+  })
+})
 router.get('/logout', (req, res) => {
   res.clearCookie('token')
   return res.json({Status: true})

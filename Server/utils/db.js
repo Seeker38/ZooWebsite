@@ -4,7 +4,7 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "zooms"
+    database: "csdl_zoo"
 })
 
 con.connect(function (err) {

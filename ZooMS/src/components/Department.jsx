@@ -6,6 +6,16 @@ const Department = () => {
 
   const [category, setCategory] = useState([])
 
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return "Null";
+    }
+  
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
+  };
+
   useEffect(()=> {
       axios.get('http://localhost:3000/auth/department')
       .then(result => {
@@ -27,6 +37,8 @@ return (
               <thead>
                   <tr>
                       <th>Name</th>
+                      <th>Mananger</th>
+                      <th>Inauguration day</th>
                   </tr>
               </thead>
               <tbody>
@@ -34,6 +46,8 @@ return (
                       category.map(c => (
                           <tr>
                               <td>{c.name}</td>
+                              <td>{c.id_manager}</td>
+                              <td>{formatDate(c.inauguration_day)}</td>
                           </tr>
                       ))
                   }

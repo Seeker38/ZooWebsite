@@ -5,21 +5,25 @@ import { useNavigate, useParams } from 'react-router-dom'
 const EditEmployee = () => {
     const {id} = useParams()
     const [employee, setEmployee] = useState({
-        name: "",
+        first_name: "",
+        last_name: "",
+        sex: "",
+        birth: "",
+        phone_number: "",
         email: "",
         password: "",
         salary: "",
-        address: "",
-        category_id: "",
+        id_department: "",
+        id_leader: "",
       });
-      const [category, setCategory] = useState([])
+      const [department, setDepartment] = useState([])
       const navigate = useNavigate()
 
       useEffect(()=> {
-        axios.get('http://localhost:3000/auth/category')
+        axios.get('http://localhost:3000/auth/department')
         .then(result => {
             if(result.data.Status) {
-                setCategory(result.data.Result);
+                setDepartment(result.data.Result);
             } else {
                 alert(result.data.Error)
             }
@@ -29,11 +33,16 @@ const EditEmployee = () => {
         .then(result => {
             setEmployee({
                 ...employee,
-                name: result.data.Result[0].name,
+                first_name: result.data.Result[0].first_name,
+                last_name: result.data.Result[0].last_name,
+                sex: result.data.Result[0].sex,
+                birth: result.data.Result[0].birth,
+                phone_number: result.data.Result[0].phone_number,
                 email: result.data.Result[0].email,
-                address: result.data.Result[0].address,
+                password: result.data.Result[0].password,
                 salary: result.data.Result[0].salary,
-                category_id: result.data.Result[0].category_id,
+                id_department: result.data.Result[0].id_department,
+                id_leader: result.data.Result[0].id_leader,
             })
         }).catch(err => console.log(err))
     }, [])
@@ -56,17 +65,77 @@ const EditEmployee = () => {
         <h3 className="text-center">Edit Employee</h3>
         <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-12">
-            <label for="inputName" className="form-label">
-              Name
+            <label for="inputFName" className="form-label">
+              First Name
             </label>
             <input
               type="text"
               className="form-control rounded-0"
-              id="inputName"
-              placeholder="Enter Name"
-              value={employee.name}
+              id="inputFName"
+              placeholder="Enter First Name"
+              value={employee.first_name}
               onChange={(e) =>
-                setEmployee({ ...employee, name: e.target.value })
+                setEmployee({ ...employee, first_name: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-12">
+            <label for="inputLName" className="form-label">
+              Last Name
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputLName"
+              placeholder="Enter Last Name"
+              value={employee.last_name}
+              onChange={(e) =>
+                setEmployee({ ...employee, last_name: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-12">
+            <label for="inputSex" className="form-label">
+              Sex
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputSex"
+              placeholder="Nam/male, Nữ/Female"
+              value={employee.sex}
+              onChange={(e) =>
+                setEmployee({ ...employee, sex: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-12">
+            <label for="inputBirth" className="form-label">
+              Birth
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputBirth"
+              placeholder="Enter Birth"
+              value={employee.birth}
+              onChange={(e) =>
+                setEmployee({ ...employee, birth: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-12">
+            <label for="inputPhoneNumber" className="form-label">
+              Phone number
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputPhoneNumber"
+              placeholder="Enter Phone number"
+              value={employee.phone_number}
+              onChange={(e) =>
+                setEmployee({ ...employee, phone_number: e.target.value })
               }
             />
           </div>
@@ -116,31 +185,31 @@ const EditEmployee = () => {
             />
           </div>
           <div className="col-12">
-            <label for="inputAddress" className="form-label">
-              Address
+            <label for="department" className="form-label">
+              Department
             </label>
-            <input
-              type="text"
-              className="form-control rounded-0"
-              id="inputAddress"
-              placeholder="Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Hà Nội"
-              autoComplete="off"
-              value={employee.address}
-              onChange={(e) =>
-                setEmployee({ ...employee, address: e.target.value })
-              }
-            />
-          </div>
-          <div className="col-12">
-            <label for="category" className="form-label">
-              Category
-            </label>
-            <select name="category" id="category" className="form-select"
-                onChange={(e) => setEmployee({...employee, category_id: e.target.value})}>
-              {category.map((c) => {
-                return <option value={c.id}>{c.name}</option>;
+            <select name="department" id="department" className="form-select"
+                onChange={(e) => setEmployee({...employee, id_department: e.target.value})}>
+              {department.map((d) => {
+                return <option value={d.id}>{d.name}</option>;
               })}
             </select>
+          </div>
+          
+          <div className="col-12">
+            <label for="inputLeader" className="form-label">
+              Leader
+            </label>
+            <input
+              type="number"
+              className="form-control rounded-0"
+              id="inputLeader"
+              placeholder="Enter Leader ID"
+              autoComplete="off"
+              onChange={(e) =>
+                setEmployee({ ...employee, id_leader: e.target.value })
+              }
+            />
           </div>
           
           <div className="col-12">

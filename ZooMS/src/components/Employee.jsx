@@ -5,7 +5,7 @@ import './Employee.css'
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [department, setDepartment] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -18,20 +18,30 @@ const Employee = () => {
         }
       }).catch((err) => console.log(err));
 
-    axios.get('http://localhost:3000/auth/category')
+    axios.get('http://localhost:3000/auth/department')
     .then(result => {
         if(result.data.Status) {
-            setCategory(result.data.Result);
+            setDepartment(result.data.Result);
         } else {
             alert(result.data.Error)
         }
     }).catch(err => console.log(err))
   }, []);
 
-  const getCategoryName = (categoryId) => {
-    const selectedCategory = category.find(c => c.id === categoryId);
-    return selectedCategory ? selectedCategory.name : 'N/A';
+  const getDepartmentName = (id_department) => {
+    const selectedDepartment = department.find(c => c.id === id_department);
+    return selectedDepartment ? selectedDepartment.name : 'N/A';
   }
+  
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return "Null";
+    }
+  
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
+  };
 
   const handleDelete = (id) => {
     axios.delete('http://localhost:3000/auth/delete_employee/'+id)
@@ -55,26 +65,28 @@ const Employee = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Image</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Sex</th>
+              <th>Birth</th>
+              <th>Phone number</th>
               <th>Email</th>
-              <th>Address</th>
-              <th>cateogory</th>
               <th>Salary</th>
+              <th>Department</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {employee.map((e) => (
               <tr>
-                <td>{e.name}</td>
-                <td>
-                  <img src={`http://localhost:3000/Images/` + e.image} className="employee_image"/>
-                </td>
+                <td>{e.first_name}</td>
+                <td>{e.last_name}</td>
+                <td>{e.sex}</td>
+                <td>{formatDate(e.birth)}</td>
+                <td>{e.phone_number}</td>
                 <td>{e.email}</td>
-                <td>{e.address}</td>
-                <td>{getCategoryName(e.category_id)}</td>
                 <td>{e.salary}</td>
+                <td>{getDepartmentName(e.id_department)}</td>
                 <td>
                   <Link to={`/dashboard/edit_employee/`+e.id} className="btn btn-primary btn-sm me-2">
                     Edit

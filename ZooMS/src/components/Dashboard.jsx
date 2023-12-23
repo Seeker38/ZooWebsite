@@ -47,9 +47,39 @@ function DashBoard() {
                 </Link>
               </li>
               <li className="w-100">
-                <Link to = "/dashboard/profile" className="nav-link px-0 align-middle text-white"> 
-                  <i className="fs-4 bi bi-person-square ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Profile</span>
+                <Link to = "/dashboard/assign_work" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-person-workspace ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Assign Work</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link to = "/dashboard/animal" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-amazon ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Animal</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link to = "/dashboard/food" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-facebook ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Feeding System</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link to = "/dashboard/buy_food" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-shop ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Buy Food</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link to = "/dashboard/medical_history" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-prescription2 ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Medical Check-up</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link to = "/dashboard/Infrastructure" className="nav-link px-0 align-middle text-white"> 
+                  <i className="fs-4 bi bi bi-buildings ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Infrastructure</span>
                 </Link>
               </li>
               <li className="w-100" onClick={handleLogout}>
