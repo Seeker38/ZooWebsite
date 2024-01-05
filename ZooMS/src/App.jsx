@@ -37,6 +37,7 @@ import EditBuyFood from './components/EditBuyFood'
 import MedicalHistory from './components/MedicalHistory'
 import AddMedicalHistory from './components/AddMedicalHistory'
 import EditMedicalHistory from './components/EditMedicalHistory'
+import Species from './components/Species'
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
         <Route path='/dashboard/add_animal/' element={<AddAnimal />}></Route>
         <Route path='/dashboard/edit_animal/:id' element={<EditAnimal />}></Route>
 
+        <Route path='/dashboard/species' element={<Species />}></Route>
         <Route path='/dashboard/add_species/' element={<AddSpecies />}></Route>
 
         <Route path='/dashboard/zoo' element={<Zoo />}></Route>

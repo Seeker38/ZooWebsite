@@ -86,7 +86,7 @@ function Animal() {
                 <th>Day Arrive</th>
                 <th>Health</th>
                 <th><Link to="/dashboard/zoo" className="text-decoration-underline text-dark-blue">Origin </Link> </th>
-                <th><Link to="/dashboard/add_species" className="text-decoration-underline text-dark-blue">Species </Link></th>
+                <th><Link to="/dashboard/species" className="text-decoration-underline text-dark-blue">Species </Link></th>
                 <th>Action</th>
               </tr>
             </thead>

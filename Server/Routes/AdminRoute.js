@@ -2,6 +2,8 @@ import express from 'express';
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
+// import { authRole } from '../basicAuth.js';
+// import { decodeJWT } from '../authMiddleware.js';
 
 // import multer from "multer";
 // import path from "path";
@@ -24,7 +26,7 @@ router.post("/adminlogin", (req, res) => {
 })
 
 
-router.get('/department', (req, res) => {
+router.get('/department',(req, res) => {
   const sql = "SELECT* From department"
   con.query(sql, (err, result) => {
     if(err) return res.json({Status: false, Error: "Query Error"})
@@ -254,26 +256,63 @@ router.get('/species', (req, res) => {
       return res.json({Status: true, Result: result})
   })
 })
-// router.post('/add_species', (req, res) => {
-//   const sql = `INSERT INTO species (name, conservation_status, id_habitat, day_arrive, health_status, origin, id_species) VALUES (?)`;
-//   const values = [
-//     req.body.name,
-//     req.body.conservation_status,
-//     req.body.sex,
-//     req.body.day_arrive,
-//     req.body.health_status,
-//     req.body.origin,
-//     req.body.id_species,
+router.post('/add_species', (req, res) => {
+  const sql = `INSERT INTO species (name, conservation_status, id_habitat) VALUES (?)`;
+  const values = [
+    req.body.name,
+    req.body.conservation_status,
+    req.body.id_habitat,
+  ];
+  con.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error('Query Error:', err);
+      return res.json({ Status: false, Error: err });
+    }
+    return res.json({ Status: true });
+  });
+});
+router.delete('/delete_species/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "delete from species where id = ?"
+  con.query(sql,[id], (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+})
 
-//   ];
-//   con.query(sql, [values], (err, result) => {
-//     if (err) {
-//       console.error('Query Error:', err);
-//       return res.json({ Status: false, Error: err });
-//     }
-//     return res.json({ Status: true });
-//   });
-// });
+// HABITAT
+router.get('/habitat', (req, res) => {
+  const sql = "SELECT * FROM habitat";
+  con.query(sql, (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+})
+router.get('/habitat/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM habitat WHERE id = ?";
+  con.query(sql,[id], (err, result) => {
+    if(err) return res.json({Status: false, Error: "Query Error"})
+    return res.json({Status: true, Result: result})
+  })
+});
+router.post('/habitat', (req, res) => {
+  const sql = `INSERT INTO habitat (name, temp, humidity, depth, id_site) VALUES (?)`;
+  const values = [
+    req.body.name,
+    req.body.temp,
+    req.body.humidity,
+    req.body.depth,
+    req.body.id_site,
+  ];
+  con.query(sql, [values], (err, result) => {
+    if (err) {
+      console.error('Query Error:', err);
+      return res.json({ Status: false, Error: err });
+    }
+    return res.json({ Status: true });
+  });
+});
 
 
 // ANIMAL TABLE

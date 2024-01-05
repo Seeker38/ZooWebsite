@@ -1,0 +1,5 @@
+id_animal,id_employee,diagnose,treatment,day
+2,23,gastrointestinal disorder,recovered,2022-06-08
+2,24,gastrointestinal disorder,recovered,2022-06-14
+36,23,gastrointestinal disorder,recovered,2022-06-27
+2,23,gastrointestinal disorder,recovered,2022-06-28
