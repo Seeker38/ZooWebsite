@@ -296,7 +296,7 @@ router.get('/habitat/:id', (req, res) => {
     return res.json({Status: true, Result: result})
   })
 });
-router.post('/habitat', (req, res) => {
+router.post('/add_habitat', (req, res) => {
   const sql = `INSERT INTO habitat (name, temp, humidity, depth, id_site) VALUES (?)`;
   const values = [
     req.body.name,
