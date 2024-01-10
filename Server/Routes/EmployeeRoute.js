@@ -27,7 +27,7 @@ router.post("/employee_login", (req, res) => {
   });
 });
 
-router.get('/dashboard/:id', (req, res) => {
+router.get('/employee_record/:id', (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM employees where id = ?"
   con.query(sql, [id], (err, result) => {
@@ -36,6 +36,18 @@ router.get('/dashboard/:id', (req, res) => {
   })
 })
 
+const app = express();
+app.get('/dashboard/*', function(req,res,next){
+  var authenticated = false;
+  //do something to authenticate user
+  if(authenticated === true){
+      //user is already authenticated
+      res.redirect('/factory/homepage.html');
+  }else{
+      //redirect to login
+      res.redirect('/entrance');
+  }
+});
 
 // ASSIGN WORK
 router.get('/assign_work/:id', (req, res) => {
@@ -50,5 +62,6 @@ router.get('/logout', (req, res) => {
   res.clearCookie('token')
   return res.json({Status: true})
 })
+
 
 export {router as employeeRouter}

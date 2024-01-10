@@ -15,6 +15,7 @@ function DashBoard() {
         anvigate('/entrance')
       }
     })
+    localStorage.removeItem("isAdmin");
   }
 
   return (

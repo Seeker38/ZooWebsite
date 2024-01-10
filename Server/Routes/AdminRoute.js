@@ -664,9 +664,12 @@ router.put('/edit_employee/:id', (req, res) => {
       req.body.category_id
     ];
 
-    con.query(sql, [...values, id], (err, result) => {
-      if (err) return res.json({ Status: false, Error: "Query Error" });
-      return res.json({ Status: true, Result: result });
+    con.query(sql, [values], (err, result) => {
+      if (err) {
+        console.error('Query Error:', err);
+        return res.json({ Status: false, Error: err });
+      }
+      return res.json({ Status: true });
     });
   });
 });

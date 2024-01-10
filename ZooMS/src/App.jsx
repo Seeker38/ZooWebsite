@@ -48,6 +48,7 @@ function App() {
       <Route path='/adminlogin' element={<Login />}></Route>
       <Route path='/employee_login' element={<EmployeeLogin />}></Route>
       <Route path='/employee_dashboard/:id' element={<EmployeeDashboard />}></Route>
+      <Route path='/edit_employee/:id' element={<EditEmployee />}></Route>
       <Route path='/dashboard' element={
         <PrivateRoute >
           <Dashboard />
