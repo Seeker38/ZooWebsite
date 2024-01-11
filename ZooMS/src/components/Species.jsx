@@ -6,6 +6,8 @@ import './Employee.css'
 function Species() {
     const [species, setSpecies] = useState([]);
     const [habitat, setHabitat] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -68,6 +70,13 @@ function Species() {
           Add species
         </Link>
         <div className="mt-3">
+          <input
+              type="text"
+              placeholder="Search by Species, Conservation status, Habitat"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+          /> 
           <table className="table">
             <thead>
               <tr>
@@ -83,8 +92,14 @@ function Species() {
               </tr>
             </thead>
             <tbody>
-              {species.map((e) => (
-                <tr>
+              {species
+                .filter((e) =>
+                  findHabitat(e.id_habitat).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  e.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  e.conservation_status.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .map((e) => (
+                <tr key={e.id}>
                   <td>{e.id}</td>
                   <td>{e.name}</td>
                   <td>{e.conservation_status}</td>

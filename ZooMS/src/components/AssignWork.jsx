@@ -7,6 +7,7 @@ function AssignWork() {
     const [work, setWork] = useState([]);
     const [employee, setEmployee] = useState([]);
     const [site, setSite] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
   
@@ -70,6 +71,13 @@ function AssignWork() {
             Assign Work
           </Link>
           <div className="mt-3">
+            <input
+              type="text"
+              placeholder="Search by Name, Work"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+            />            
             <table className="table">
               <thead>
                 <tr>
@@ -81,8 +89,13 @@ function AssignWork() {
                 </tr>
               </thead>
               <tbody>
-                {work.map((e) => (
-                  <tr>
+                {work
+                  .filter((e) =>
+                    findEmployeeName(e.id).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    e.work.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                  .map((e) => (
+                <tr key={e.id}>
                     <td>{e.id}</td>
                     <td>{findEmployeeName(e.id)}</td>
                     <td>{findSite(e.id_site)}</td>

@@ -5,6 +5,8 @@ import './Employee.css'
 
 function Zoo() {
     const [zoo, setZoo] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -45,6 +47,13 @@ function Zoo() {
           Add Zoo bases
         </Link>
         <div className="mt-3">
+          <input
+              type="text"
+              placeholder="Search here"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+          />           
           <table className="table">
             <thead>
               <tr>
@@ -58,8 +67,17 @@ function Zoo() {
               </tr>
             </thead>
             <tbody>
-              {zoo.map((e) => (
-                <tr>
+            {zoo
+              .filter((e) =>
+                e.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.country.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.phone_number.includes(searchTerm)
+              )
+              .map((e) => (
+                <tr key={e.address}>
                   <td>{e.address}</td>
                   <td>{e.name}</td>
                   <td>{e.phone_number}</td>

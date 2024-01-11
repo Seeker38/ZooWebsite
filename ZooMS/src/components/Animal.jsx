@@ -7,6 +7,8 @@ function Animal() {
     const [animal, setAnimal] = useState([]);
     const [species, setSpecies] = useState([]);
     const [zoo, setZoo] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -77,6 +79,13 @@ function Animal() {
           Add Animal
         </Link>
         <div className="mt-3">
+          <input
+              type="text"
+              placeholder="Search by Animal, Origin, Species"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+          />          
           <table className="table">
             <thead>
               <tr>
@@ -91,8 +100,15 @@ function Animal() {
               </tr>
             </thead>
             <tbody>
-              {animal.map((e) => (
-                <tr>
+            {animal
+              .filter((e) =>
+                e.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.sex.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                getZooName(e.origin).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                findSpecies(e.id_species).toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((e) => (
+                <tr key={e.id}>
                   <td>{e.name}</td>
                   <td>{formatDate(e.birth)}</td>
                   <td>{e.sex}</td>

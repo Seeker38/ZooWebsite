@@ -5,6 +5,9 @@ const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0)
   const [employeeTotal, setemployeeTotal] = useState(0)
   const [salaryTotal, setSalaryTotal] = useState(0)
+  const [feedingCost, setFeedingCost] = useState(0)
+  const [memberAccTotal, setMemberAccTotal] = useState(0)
+  const [incomeBookTotal, setIncomeBookTotal] = useState(0)
   const [admins, setAdmins] = useState([])
 
   useEffect(() => {
@@ -12,6 +15,9 @@ const Home = () => {
     employeeCount();
     salaryCount();
     AdminRecords();
+    FeedingCost();
+    memberAccCount();
+    incomeFromBooking();
   }, [])
 
   const AdminRecords = () => {
@@ -45,6 +51,36 @@ const Home = () => {
     .then(result => {
       if(result.data.Status) {
         setSalaryTotal(result.data.Result[0].TotalSalary)
+      } else {
+        alert(result.data.Error)
+      }
+    })
+  }
+  const FeedingCost = () => {
+    axios.get('http://localhost:3000/auth/feeding_cost')
+    .then(result => {
+      if(result.data.Status) {
+        setFeedingCost(result.data.Result[0].TotalCost)
+      } else {
+        alert(result.data.Error)
+      }
+    })
+  }
+  const memberAccCount = () => {
+    axios.get('http://localhost:3000/auth/visitor_acc_count')
+    .then(result => {
+      if(result.data.Status) {
+        setMemberAccTotal(result.data.Result[0].visitor)
+      } else {
+        alert(result.data.Error)
+      }
+    })
+  }
+  const incomeFromBooking = () => {
+    axios.get('http://localhost:3000/auth/income_book')
+    .then(result => {
+      if(result.data.Status) {
+        setIncomeBookTotal(result.data.Result[0].TotalIncome)
       } else {
         alert(result.data.Error)
       }
@@ -84,6 +120,41 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className='p-3 d-flex justify-content-around mt-3'>
+        <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
+          <div className='text-center pb-1'>
+            <h4>Feeding Cost</h4>
+          </div>
+          <hr />
+          <div className='d-flex justify-content-around'>
+            <h5>Total:</h5>
+            <h5>${feedingCost}</h5>
+          </div>
+        </div>
+        {/* <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
+          <div className='text-center pb-1'>
+            <h4>Member</h4>
+          </div>
+          <hr />
+          <div className='d-flex justify-content-around'>
+            <h5>Total:</h5>
+            <h5>{memberAccTotal}</h5>
+          </div>
+        </div> */}
+        {/* <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
+          <div className='text-center pb-1'>
+            <h4>Income online</h4>
+          </div>
+          <hr />
+          <div className='d-flex justify-content-around'>
+            <h5>Total:</h5>
+            <h5>${incomeBookTotal}</h5>
+          </div>
+        </div> */}
+      </div>
+
+
+      
       <div className='mt-4 px-5 pt-3'>
         <h3>List of Admins</h3>
         <table className='table'>

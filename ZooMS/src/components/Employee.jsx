@@ -6,6 +6,7 @@ import './Employee.css'
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const [department, setDepartment] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -62,6 +63,13 @@ const Employee = () => {
         Add Employee
       </Link>
       <div className="mt-3">
+        <input
+            type="text"
+            placeholder="Search by Name, Phone, Email"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control mb-2"
+        />        
         <table className="table">
           <thead>
             <tr>
@@ -77,8 +85,15 @@ const Employee = () => {
             </tr>
           </thead>
           <tbody>
-            {employee.map((e) => (
-              <tr>
+          {employee
+            .filter((e) =>
+              e.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              e.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              e.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              e.phone_number.includes(searchTerm)
+            )
+            .map((e) => (
+              <tr key={e.id}>
                 <td>{e.first_name}</td>
                 <td>{e.last_name}</td>
                 <td>{e.sex}</td>

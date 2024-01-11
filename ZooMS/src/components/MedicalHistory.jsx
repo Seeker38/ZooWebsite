@@ -7,6 +7,7 @@ function MedicalHistory() {
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [employee, setEmployee] = useState([]);
     const [animal, setAnimal] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
 
     const navigate = useNavigate()
@@ -81,6 +82,13 @@ function MedicalHistory() {
             Add Medical History
           </Link>
           <div className="mt-3">
+            <input
+                type="text"
+                placeholder="Search by Animal, Employee, Diagnose, Treatment"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control mb-2"
+            /> 
             <table className="table">
               <thead>
                 <tr>
@@ -94,8 +102,15 @@ function MedicalHistory() {
                 </tr>
               </thead>
               <tbody>
-                {medicalHistory.map((e) => (
-                  <tr>
+                {medicalHistory
+                .filter((e) =>
+                  findAnimal(e.id_animal).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  findEmployeeName(e.id_employee).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  e.diagnose.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  e.treatment.toLowerCase().includes(searchTerm.toLowerCase()) 
+                )
+                .map((e) => (
+                  <tr key={e.id}>
                     <td>{e.id}</td>
                     <td>{e.id_animal} | {findAnimal(e.id_animal)}</td>
                     <td>{e.id_employee} | {findEmployeeName(e.id_employee)}</td>

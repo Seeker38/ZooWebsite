@@ -6,6 +6,7 @@ function Food() {
     const [food, setFood] = useState([]);
     const [eat, setEat] = useState([]);
     const [animal, setAnimal] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -80,6 +81,13 @@ function Food() {
           Add food
         </Link>
         <div className="mt-3">
+          <input
+              type="text"
+              placeholder="Search by Animal, Food"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+          /> 
           <table className="table">
             <thead>
               <tr>
@@ -93,8 +101,13 @@ function Food() {
               </tr>
             </thead>
             <tbody>
-              {food.map((e) => (
-                <tr>
+              {food
+              .filter((e) =>
+                findAnimal(e.id).toLowerCase().includes(searchTerm.toLowerCase()) ||
+                e.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+              )
+              .map((e) => (
+                <tr key={e.id}>
                   <td>{findAnimal(e.id)}</td>
                   <td>{e.name}</td>
                   <td>{findEat(e.quantity)} / {e.inventory_quantity}</td>

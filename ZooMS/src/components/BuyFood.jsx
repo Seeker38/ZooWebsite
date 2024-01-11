@@ -6,7 +6,7 @@ import './Employee.css'
 function BuyFood() {
     const [buyFood, setBuyFood] = useState([]);
     const [food, setFood] = useState([]);
-
+    const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
   
@@ -58,6 +58,13 @@ function BuyFood() {
             Add Bill
           </Link>
           <div className="mt-3">
+            <input
+                type="text"
+                placeholder="Search by Animal, Food"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control mb-2"
+            />             
             <table className="table">
               <thead>
                 <tr>
@@ -69,8 +76,12 @@ function BuyFood() {
                 </tr>
               </thead>
               <tbody>
-                {buyFood.map((e) => (
-                  <tr>
+                {buyFood
+                .filter((e) =>
+                  findFood(e.id_food).toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .map((e) => (
+                  <tr key={e.id}>
                     <td>{e.id}</td>
                     <td>{findFood(e.id_food)}</td>
                     <td>{e.quantity}</td>

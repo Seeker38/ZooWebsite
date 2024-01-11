@@ -6,6 +6,7 @@ import './Employee.css'
 function Infrastructure() {
     const [infrastructure, setInfrastructure] = useState([]);
     const [site, setSite] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -52,6 +53,13 @@ function Infrastructure() {
           Add Infrastructure
         </Link>
         <div className="mt-3">
+          <input
+              type="text"
+              placeholder="Search by Name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control mb-2"
+          />
           <table className="table">
             <thead>
               <tr>
@@ -62,8 +70,12 @@ function Infrastructure() {
               </tr>
             </thead>
             <tbody>
-              {infrastructure.map((e) => (
-                <tr>
+            {infrastructure
+              .filter((e) =>
+                  e.name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((e) => (
+                <tr key={e.id}>
                   <td>{e.name}</td>
                   <td>{findSite(e.id_site)}</td>
                   <td>{e.status}</td>

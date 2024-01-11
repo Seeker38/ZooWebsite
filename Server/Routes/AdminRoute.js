@@ -708,6 +708,29 @@ router.get("/salary_count", (req, res) => {
       return res.json({Status: true, Result: result})
   })
 })
+router.get("/feeding_cost", (req, res) => {
+  const sql = "SELECT SUM(quantity * unit_price) AS TotalCost FROM buy_food";
+  con.query(sql, (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+})
+
+// FOR CUSTOMER
+router.get("/visitor_acc_count", (req, res) => {
+  const sql = "SELECT COUNT(phone_number) AS visitor FROM customer";
+  con.query(sql, (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+})
+router.get("/income_book", (req, res) => {
+  const sql = "SELECT SUM(price) AS TotalIncome FROM tickets";
+  con.query(sql, (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"})
+      return res.json({Status: true, Result: result})
+  })
+})
 
 router.get("/admin_records", (req, res) => {
   const sql = "select * from admin"
