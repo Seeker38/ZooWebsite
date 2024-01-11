@@ -39,32 +39,32 @@ const EmployeeDashboard = () => {
       }).catch(err => console.log(err))
     };
 
-  // const handleJob = (departmentId) => {
-  //   // Add logic to change the URL path based on the departmentId
-  //   let newPath = '';
+  const handleJob = (departmentId) => {
+    // Add logic to change the URL path based on the departmentId
+    let newPath = '';
 
-  //   // You can customize the URL path based on the departmentId
-  //   if (departmentId === 6) {
-  //     newPath = '/dashboard/employee';
-  //   } else {
-  //     // Handle other departments if needed
-  //     newPath = '/edit/default_path';
-  //   }
+    // You can customize the URL path based on the departmentId
+    if (departmentId === 6) {
+      newPath = '/department';
+    } else {
+      // Handle other departments if needed
+      newPath = '/edit/default_path';
+    }
 
-  //   // Navigate to the new path
-  //   navigate(newPath);
-  // };
+    // Navigate to the new path
+    navigate(newPath);
+  };
 
-  // const renderEditButton = () => {
-  //   if (employee.id_department === 6) {
-  //     return (
-  //       <button className='btn btn-primary me-2' onClick={() => handleJob(employee.id_department)}>
-  //         Job
-  //       </button>
-  //     );
-  //   }
-  //   return null;
-  // };    
+  const renderEditButton = () => {
+    if (employee.id_department === 6) {
+      return (
+        <button className='btn btn-primary me-2' onClick={() => handleJob(employee.id_department)}>
+          Job
+        </button>
+      );
+    }
+    return null;
+  };    
 
 return (
   <div>
@@ -81,7 +81,7 @@ return (
               <h3>Salary: ${employee.salary}</h3>
           </div>
           <div>
-              {/* {renderEditButton()} */}
+              {renderEditButton()}
               <Link to={`/edit_employee/`+employee.id} className="btn btn-primary me-2">
                         Edit
                       </Link>

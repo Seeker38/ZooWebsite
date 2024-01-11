@@ -6,8 +6,8 @@ const Home = () => {
   const [employeeTotal, setemployeeTotal] = useState(0)
   const [salaryTotal, setSalaryTotal] = useState(0)
   const [feedingCost, setFeedingCost] = useState(0)
-  const [memberAccTotal, setMemberAccTotal] = useState(0)
-  const [incomeBookTotal, setIncomeBookTotal] = useState(0)
+  // const [memberAccTotal, setMemberAccTotal] = useState(0)
+  // const [incomeBookTotal, setIncomeBookTotal] = useState(0)
   const [admins, setAdmins] = useState([])
 
   useEffect(() => {
@@ -16,8 +16,8 @@ const Home = () => {
     salaryCount();
     AdminRecords();
     FeedingCost();
-    memberAccCount();
-    incomeFromBooking();
+    // memberAccCount();
+    // incomeFromBooking();
   }, [])
 
   const AdminRecords = () => {
@@ -66,26 +66,26 @@ const Home = () => {
       }
     })
   }
-  const memberAccCount = () => {
-    axios.get('http://localhost:3000/auth/visitor_acc_count')
-    .then(result => {
-      if(result.data.Status) {
-        setMemberAccTotal(result.data.Result[0].visitor)
-      } else {
-        alert(result.data.Error)
-      }
-    })
-  }
-  const incomeFromBooking = () => {
-    axios.get('http://localhost:3000/auth/income_book')
-    .then(result => {
-      if(result.data.Status) {
-        setIncomeBookTotal(result.data.Result[0].TotalIncome)
-      } else {
-        alert(result.data.Error)
-      }
-    })
-  }
+  // const memberAccCount = () => {
+  //   axios.get('http://localhost:3000/auth/visitor_acc_count')
+  //   .then(result => {
+  //     if(result.data.Status) {
+  //       setMemberAccTotal(result.data.Result[0].visitor)
+  //     } else {
+  //       alert(result.data.Error)
+  //     }
+  //   })
+  // }
+  // const incomeFromBooking = () => {
+  //   axios.get('http://localhost:3000/auth/income_book')
+  //   .then(result => {
+  //     if(result.data.Status) {
+  //       setIncomeBookTotal(result.data.Result[0].TotalIncome)
+  //     } else {
+  //       alert(result.data.Error)
+  //     }
+  //   })
+  // }
   return (
     <div>
       <div className='p-3 d-flex justify-content-around mt-3'>
