@@ -49,7 +49,43 @@ function App() {
       <Route path='/employee_login' element={<EmployeeLogin />}></Route>
       <Route path='/employee_dashboard/:id' element={<EmployeeDashboard />}></Route>
       <Route path='/edit_employee/:id' element={<EditEmployee />}></Route>
+
       <Route path='/department' element={<Department />}></Route>
+      <Route path='/add_department' element={<AddDepartment />}></Route>
+      <Route path='/add_employee' element={<AddEmployee />}></Route>
+      <Route path='/edit_employee/:id' element={<EditEmployee />}></Route>
+
+      <Route path='/assign_work/' element={<AssignWork />}></Route>
+      <Route path='/add_assign_work/' element={<AddAssignWork />}></Route>
+      <Route path='/edit_assign_work/:id' element={<EditAssignWork />}></Route>
+
+      <Route path='/site' element={<Site />}></Route>
+      <Route path='/infrastructure' element={<Infrastructure />}></Route>
+      <Route path='/add_infrastructure/' element={<AddInfrastructure />}></Route>
+      <Route path='/edit_infrastructure/:id' element={<EditInfrastructure />}></Route>
+
+      <Route path='/animal' element={<Animal />}></Route>
+      <Route path='/add_animal/' element={<AddAnimal />}></Route>
+      <Route path='/edit_animal/:id' element={<EditAnimal />}></Route>
+
+      <Route path='/species' element={<Species />}></Route>
+      <Route path='/add_species/' element={<AddSpecies />}></Route>
+
+      <Route path='/zoo' element={<Zoo />}></Route>
+      <Route path='/add_zoo' element={<AddZoo />}></Route>
+
+      <Route path='/food' element={<Food />}></Route>
+      <Route path='/add_food' element={<AddFood />}></Route>
+      <Route path='/edit_food/:id' element={<EditFood />}></Route>
+
+      <Route path='/buy_food' element={<BuyFood />}></Route>
+      <Route path='/add_buy_food' element={<AddBuyFood />}></Route>
+      <Route path='/edit_buy_food/:id' element={<EditBuyFood />}></Route>
+
+      <Route path='/medical_history' element={<MedicalHistory />}></Route>
+      <Route path='/add_medical_history' element={<AddMedicalHistory />}></Route>
+      <Route path='/edit_medical_history/:id' element={<EditMedicalHistory />}></Route>
+
       <Route path='/dashboard' element={
         <PrivateRoute >
           <Dashboard />

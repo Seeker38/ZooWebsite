@@ -2,7 +2,6 @@ import React from 'react'
 import { Navigate } from 'react-router-dom'
 
 const PrivateRoute = ({ children }) => {
-  // Check if the user is an admin (you might have a more sophisticated check here)
   const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   return isAdmin ? (

@@ -16,6 +16,9 @@ const Department = () => {
     return formattedDate;
   };
 
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const addDepartmentPath = isAdmin ? '/dashboard/add_department' : '/add_department';
+
   useEffect(()=> {
       axios.get('http://localhost:3000/auth/department')
       .then(result => {
@@ -31,7 +34,7 @@ return (
       <div className='d-flex justify-content-center'>
           <h3>Department List</h3>
       </div>
-      <Link to="/dashboard/add_department" className='btn btn-primary'>Add Department</Link>
+      <Link to={addDepartmentPath} className='btn btn-primary'>Add Department</Link>
       <div className='mt-3'>
           <table className='table'>
               <thead>

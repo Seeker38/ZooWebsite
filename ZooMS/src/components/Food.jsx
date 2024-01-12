@@ -8,6 +8,12 @@ function Food() {
     const [animal, setAnimal] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate()
+
+
+
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    const addFoodPath = isAdmin ? '/dashboard/add_food' : '/add_food';
+    const editFoodPath = isAdmin ? '/dashboard/edit_food' : '/edit_food';
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/food")
@@ -77,7 +83,7 @@ function Food() {
         <div className="d-flex justify-content-center">
           <h3>Feeding List</h3>
         </div>
-        <Link to="/dashboard/add_food" className="btn btn-primary">
+        <Link to={addFoodPath} className="btn btn-primary">
           Add food
         </Link>
         <div className="mt-3">
@@ -115,7 +121,7 @@ function Food() {
                   <td>{formatDate(e.date_purch)}</td>
                   <td>{formatDate(e.date_expiry)}</td>
                   <td>
-                    <Link to={`/dashboard/edit_food/`+e.id} className="btn btn-primary btn-sm me-2">
+                    <Link to={`${editFoodPath}/${e.id}`} className="btn btn-primary btn-sm me-2">
                       Edit
                     </Link>
                     <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

@@ -9,6 +9,12 @@ function Infrastructure() {
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate()
   
+
+
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    const addInfrastPath = isAdmin ? '/dashboard/add_infrastructure' : '/add_infrastructure';
+    const editInfrastPath = isAdmin ? '/dashboard/edit_infrastructure' : '/edit_infrastructure';
+
     useEffect(() => {
       axios.get("http://localhost:3000/auth/infrastructure")
         .then((result) => {
@@ -49,7 +55,7 @@ function Infrastructure() {
         <div className="d-flex justify-content-center">
           <h3>Infrastructure List</h3>
         </div>
-        <Link to="/dashboard/add_infrastructure" className="btn btn-primary">
+        <Link to={addInfrastPath} className="btn btn-primary">
           Add Infrastructure
         </Link>
         <div className="mt-3">
@@ -80,7 +86,7 @@ function Infrastructure() {
                   <td>{findSite(e.id_site)}</td>
                   <td>{e.status}</td>
                   <td>
-                    <Link to={`/dashboard/edit_infrastructure/`+e.id} className="btn btn-primary btn-sm me-2">
+                    <Link to={`${editInfrastPath}/${e.id}`} className="btn btn-primary btn-sm me-2">
                       Edit
                     </Link>
                     <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

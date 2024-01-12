@@ -9,6 +9,12 @@ const Employee = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate()
 
+
+
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const addEmpPath = isAdmin ? '/dashboard/add_employee' : '/add_employee';
+  const editEmpPath = isAdmin ? '/dashboard/edit_employee' : '/edit_employee';
+
   useEffect(() => {
     axios.get("http://localhost:3000/auth/employee")
       .then((result) => {
@@ -59,7 +65,7 @@ const Employee = () => {
       <div className="d-flex justify-content-center">
         <h3>Employee List</h3>
       </div>
-      <Link to="/dashboard/add_employee" className="btn btn-primary">
+      <Link to={addEmpPath} className="btn btn-primary">
         Add Employee
       </Link>
       <div className="mt-3">
@@ -103,7 +109,7 @@ const Employee = () => {
                 <td>{e.salary}</td>
                 <td>{getDepartmentName(e.id_department)}</td>
                 <td>
-                  <Link to={`/dashboard/edit_employee/`+e.id} className="btn btn-primary btn-sm me-2">
+                  <Link to={`${editEmpPath}/${e.id}`} className="btn btn-primary btn-sm me-2">
                     Edit
                   </Link>
                   <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

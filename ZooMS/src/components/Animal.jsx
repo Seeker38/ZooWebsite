@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import './Employee.css'
 
 function Animal() {
@@ -10,6 +10,19 @@ function Animal() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
+
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    var link_add = '/add_animal';
+    var link_edit = '/edit_animal/';
+    var zoos = '/zoo';
+    var speciess = '/species'
+    
+    if (isAdmin) { 
+      link_add = '/dashboard/add_animal'
+      link_edit = '/dashboard/edit_animal/';
+      zoos = '/dashboard/zoo';
+      speciess = '/dashboard/species'
+    }
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/animal")
@@ -69,13 +82,16 @@ function Animal() {
               alert(result.data.Error)
           }
       })
-    } 
+    }
+    
+    
+
     return (
       <div className="px-5 mt-3">
         <div className="d-flex justify-content-center">
           <h3>Animal List</h3>
         </div>
-        <Link to="/dashboard/add_animal" className="btn btn-primary">
+        <Link to = {link_add} className="btn btn-primary">
           Add Animal
         </Link>
         <div className="mt-3">
@@ -94,8 +110,8 @@ function Animal() {
                 <th>Sex</th>
                 <th>Day Arrive</th>
                 <th>Health</th>
-                <th><Link to="/dashboard/zoo" className="text-decoration-underline text-dark-blue">Origin </Link> </th>
-                <th><Link to="/dashboard/species" className="text-decoration-underline text-dark-blue">Species </Link></th>
+                <th><Link to={zoos} className="text-decoration-underline text-dark-blue">Origin </Link> </th>
+                <th><Link to={speciess} className="text-decoration-underline text-dark-blue">Species </Link></th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -117,7 +133,7 @@ function Animal() {
                   <td>{getZooName(e.origin)}</td>
                   <td>{findSpecies(e.id_species)}</td>
                   <td>
-                    <Link to={`/dashboard/edit_animal/`+e.id} className="btn btn-primary btn-sm me-2">
+                    <Link to={link_edit+e.id} className="btn btn-primary btn-sm me-2">
                       Edit
                     </Link>
                     <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

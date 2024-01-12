@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , Navigate} from "react-router-dom";
 import './Employee.css'
 
 function BuyFood() {
@@ -9,6 +9,15 @@ function BuyFood() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
+
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    var link_add = '/add_buy_food';
+    var link_edit = '/edit_buy_food/';
+    
+    if (isAdmin) { 
+      link_add = '/dashboard/add_buy_food'
+      link_edit = '/dashboard/edit_buy_food/';
+    }
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/buy_food")
@@ -54,7 +63,7 @@ function BuyFood() {
           <div className="d-flex justify-content-center">
             <h3>Buy Food List</h3>
           </div>
-          <Link to="/dashboard/add_buy_food" className="btn btn-primary">
+          <Link to={link_add} className="btn btn-primary">
             Add Bill
           </Link>
           <div className="mt-3">
@@ -87,7 +96,7 @@ function BuyFood() {
                     <td>{e.quantity}</td>
                     <td>{e.unit_price}</td>
                     <td>
-                      <Link to={`/dashboard/edit_buy_food/`+e.id} className="btn btn-primary btn-sm me-2">
+                      <Link to={link_edit+e.id} className="btn btn-primary btn-sm me-2">
                         Edit
                       </Link>
                       <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

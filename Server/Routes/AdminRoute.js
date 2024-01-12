@@ -649,22 +649,26 @@ router.get('/employee/:id', (req, res) => {
 router.put('/edit_employee/:id', (req, res) => {
   const id = req.params.id;
   const sql = `UPDATE employees 
-    set first_name = ?, last_name = ?, sex = ?, birth = ?, phone_number = ?, email = ?, password = ?, salary = ?, address = ?, id_department = ?, id_leader = ? 
+    set first_name = ?, last_name = ?, sex = ?, birth = ?, phone_number = ?, email = ?, password = ?, salary = ?, id_department = ?, id_leader = ? 
     Where id = ?`;
 
   bcrypt.hash(req.body.password, 10, (err, hash) => {
     if (err) return res.json({ Status: false, Error: "Hashing Error" });
 
     const values = [
-      req.body.name,
+      req.body.first_name,
+      req.body.last_name,
+      req.body.sex,
+      req.body.birth,
+      req.body.phone_number,
       req.body.email,
       hash,
       req.body.salary,
-      req.body.address,
-      req.body.category_id
+      req.body.id_department,
+      req.body.id_leader
     ];
 
-    con.query(sql, [values], (err, result) => {
+    con.query(sql, [...values, id], (err, result) => {
       if (err) {
         console.error('Query Error:', err);
         return res.json({ Status: false, Error: err });

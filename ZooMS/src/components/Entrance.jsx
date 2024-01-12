@@ -16,6 +16,7 @@ const Start = () => {
             navigate('/dashboard');
           } 
           if (result.data.role === "employee") {
+            // localStorage.setItem("isEmp", "true");
             navigate('/employee_dashboard/' + result.data.id);
           }
         }

@@ -14,10 +14,13 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cookieParser())
 app.use("/auth", adminRouter);  
 app.use("/employee", employeeRouter);  
 app.use(express.static("Public"));
-app.use(cookieParser())
+
+// app.use(cookieParser())
+
 
 
 const verifyUser = (req, res, next) => {
@@ -32,8 +35,9 @@ const verifyUser = (req, res, next) => {
 
             // Check if the user is an employee
             if (req.role === 'employee') {
-                // Block access to the /dashboard route for employees
-                if (req.path.startsWith('/dashboard')) {
+                // Block access to certain routes for employees
+                const forbiddenRoutes = ['/dashboard'];
+                if (forbiddenRoutes.includes(req.path)) {
                     return res.json({ Status: false, Error: "Access forbidden for employees" });
                 }
             }

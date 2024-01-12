@@ -11,6 +11,11 @@ function MedicalHistory() {
 
 
     const navigate = useNavigate()
+
+
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    const addMedicalPath = isAdmin ? '/dashboard/add_medical_history' : '/add_medical_history';
+    const editMedicalPath = isAdmin ? '/dashboard/edit_medical_history' : '/edit_medical_history';
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/medical_history")
@@ -78,7 +83,7 @@ function MedicalHistory() {
           <div className="d-flex justify-content-center">
             <h3>Medical History</h3>
           </div>
-          <Link to="/dashboard/add_medical_history" className="btn btn-primary">
+          <Link to={addMedicalPath} className="btn btn-primary">
             Add Medical History
           </Link>
           <div className="mt-3">
@@ -118,7 +123,7 @@ function MedicalHistory() {
                     <td>{e.treatment}</td>
                     <td>{formatDate(e.day)}</td>
                     <td>
-                      <Link to={`/dashboard/edit_medical_history/`+e.id} className="btn btn-primary btn-sm me-2">
+                      <Link to={`${editMedicalPath}/${e.id}`} className="btn btn-primary btn-sm me-2">
                         Edit
                       </Link>
                       <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>

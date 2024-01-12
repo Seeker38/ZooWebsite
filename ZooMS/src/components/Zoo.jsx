@@ -8,6 +8,11 @@ function Zoo() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
+
+
+
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    const addZooPath = isAdmin ? '/dashboard/add_zoo' : '/add_zoo';
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/zoo")
@@ -43,7 +48,7 @@ function Zoo() {
         <div className="d-flex justify-content-center">
           <h3>Zoo places List</h3>
         </div>
-        <Link to="/dashboard/add_zoo" className="btn btn-primary">
+        <Link to={addZooPath} className="btn btn-primary">
           Add Zoo bases
         </Link>
         <div className="mt-3">

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import './Employee.css'
 
 function AssignWork() {
@@ -10,6 +10,15 @@ function AssignWork() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate()
+
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    var link_add = '/add_assign_work';
+    var link_edit = '/edit_assign_work/';
+    
+    if (isAdmin) { 
+      link_add = '/dashboard/add_assign_work'
+      link_edit = '/dashboard/edit_assign_work/';
+    }
   
     useEffect(() => {
       axios.get("http://localhost:3000/auth/assign_work")
@@ -67,7 +76,7 @@ function AssignWork() {
           <div className="d-flex justify-content-center">
             <h3>Employee List</h3>
           </div>
-          <Link to="/dashboard/add_assign_work" className="btn btn-primary">
+          <Link to={link_add} className="btn btn-primary">
             Assign Work
           </Link>
           <div className="mt-3">
@@ -101,7 +110,7 @@ function AssignWork() {
                     <td>{findSite(e.id_site)}</td>
                     <td>{e.work}</td>
                     <td>
-                      <Link to={`/dashboard/edit_assign_work/`+e.id} className="btn btn-primary btn-sm me-2">
+                      <Link to={link_edit+e.id} className="btn btn-primary btn-sm me-2">
                         Edit
                       </Link>
                       <button className="btn btn-danger btn-sm" onClick={() => handleDelete(e.id)}>
